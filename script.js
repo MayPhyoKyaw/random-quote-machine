@@ -221,10 +221,12 @@ var quotes = [
        "quote":"If you can dream it, you can achieve it.","author":"Zig Ziglar"}
 ];
 
-$(document).ready(function () {
-  $("#new-quote").on('click', () => {
-    let randomQuote = quotes[Math.round(Math.random() * quotes.length)];
-    let randomColor = colors[Math.round(Math.random() * colors.length)];
+function getQuote() {
+  let randomQuote = quotes[Math.round(Math.random() * quotes.length)];
+  $("#tweet-quote").attr(
+      'href',
+     'https://twitter.com/intent/tweet?hashtags=quotes&related=freecodecamp&text=' + encodeURIComponent('"' + randomQuote.quote + '" ' + randomQuote.author)
+    );
     
     $('.text-block').animate({ opacity: 0 }, 500, function () {
       $(this).animate({ opacity: 1 }, 500);
@@ -235,6 +237,8 @@ $(document).ready(function () {
       $(this).animate({opacity: 1}, 500);
       $("#author").text(randomQuote.author);
     });
+  
+  let randomColor = colors[Math.round(Math.random() * colors.length)];
     
     $('body').css({
       backgroundColor: randomColor,           color: randomColor
@@ -247,8 +251,10 @@ $(document).ready(function () {
      $('#tweet-quote').css({
         color: randomColor
      });
-    
-    console.log(randomColor);
-    
-  })
+}
+
+$(document).ready(function () {
+  getQuote();
+  
+  $("#new-quote").on('click', getQuote)
 })
